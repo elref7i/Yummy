@@ -1,0 +1,18 @@
+a {
+  display: inline-block;
+}
+.cursor-p {
+  cursor: pointer;
+}
+
+.overlay-image {
+  background-color: #fffa;
+  bottom: -100%;
+  transition: bottom 0.4s;
+}
+.image-foot:hover .overlay-image {
+  bottom: 0;
+}
+.w-fit {
+  width: fit-content;
+}
