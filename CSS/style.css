@@ -5,7 +5,7 @@ a {
   cursor: pointer;
 }
 aside {
-  z-index: 999;
+  z-index: 9999;
   left: -312.056px;
 }
 .overlay-image {
@@ -23,4 +23,9 @@ aside {
 .close-menue {
   display: none;
   /* display: block; */
+}
+.show-info {
+  /* display: none; */
+  background-color: #000a;
+  z-index: 999;
 }
