@@ -17,24 +17,24 @@
   <title>Yummy</title>
 </head>
 
-<body class="bg-black">
-  <aside class="d-none position-fixed d-flex justify-content-between gap-1 min-vh-100 bg-black">
-    <div class="content-sidebar p-3  min-vh-100 d-flex flex-column  justify-content-between ">
-      <ul class="list-unstyled py-3 mb-0 w-fit">
+<body>
+  <aside class="position-fixed d-flex justify-content-between gap-1 top-0 bottom-0 bg-black ">
+    <div class="left-sidebar | p-3  min-vh-100  d-flex flex-column  justify-content-between ">
+      <ul class="links-sidebar list-unstyled py-3 mb-0 w-fit">
         <li class="mb-3 fs-5 fw-bold">
-          <a href="#" class="text-decoration-none text-white">Search</a>
+          <a href="#" class="text-decoration-none text-white" data-target="search">Search</a>
         </li>
         <li class="mb-3 fs-5 fw-bold">
-          <a href="#" class="text-decoration-none text-white">Categories</a>
+          <a href="#" class="text-decoration-none text-white" data-target="categories">Categories</a>
         </li>
         <li class="mb-3 fs-5 fw-bold">
-          <a href="#" class="text-decoration-none text-white">Area</a>
+          <a href="#" class="text-decoration-none text-white" data-target="area">Area</a>
         </li>
         <li class="mb-3 fs-5 fw-bold">
-          <a href="#" class="text-decoration-none text-white">Ingradients</a>
+          <a href="#" class="text-decoration-none text-white" data-target="ingradients">Ingradients</a>
         </li>
         <li class="fs-5 fw-bold">
-          <a href="#" class="text-decoration-none text-white">Contact US</a>
+          <a href="#" class="text-decoration-none text-white" data-target="contact">Contact US</a>
         </li>
       </ul>
       <footer class="footer-aside">
@@ -47,22 +47,41 @@
           Reserved.</p>
       </footer>
     </div>
-    <div class="menue-side-bar bg-danger d-flex flex-column min-vh-100 justify-content-between align-items-center py-3">
+    <div class="right-sidebar | bg-white d-flex flex-column min-vh-100 justify-content-between align-items-center py-3">
       <div class="fs-1 display-1">😋</div>
       <div class="icon-bar">
-        <i class="fa-solid fa-bars fs-3"></i>
-        <i class="fa-solid fa-x d-none"></i>
+        <i class="cursor-p open-menue | fa-solid fa-bars fs-3" data-open='true'></i>
+        <i class="cursor-p close-menue | fa-solid fa-x fs-3" data-open="false"></i>
       </div>
-      <ul class="icon-share list-unstyled">
-        <li><a href="#" class="text-white mb-2"><i class="fa-solid fa-globe fs-5"></i></a></li>
-        <li><a href="#" class="text-white"><i class="fa-solid fa-share fs-5"></i></a></li>
+      <ul class="icon-share | list-unstyled">
+        <li><a href="#" class="text-black mb-2"><i class="fa-solid fa-globe fs-5"></i></a></li>
+        <li><a href="#" class="text-black"><i class="fa-solid fa-share fs-5"></i></a></li>
       </ul>
 
 
     </div>
   </aside>
   <main class="min-vh-100">
-    <section class="d-none catagory">
+    <section class="home | pt-4">
+      <div class="container">
+        <div class="row gx-0 gx-sm-3 gy-3">
+
+        </div>
+      </div>
+    </section>
+
+
+
+
+
+
+
+
+
+
+
+
+    <section class="catagory | d-none">
       <div class=" container">
         <div class="row gx-0 gx-sm-3 gy-3">
           <div class="| col-12 col-md-4 col-lg-3">
@@ -82,24 +101,7 @@
         </div>
       </div>
     </section>
-    <section class="d-none home">
-      <div class=" container">
-        <div class="row gx-0 gx-sm-3 gy-3">
-          <div class="col-12 col-md-4 col-lg-3">
-            <div class="inner p-3">
-              <div class="image-foot cursor-p |  position-relative rounded-5 overflow-hidden shadow-lg ">
-                <img src="https://www.themealdb.com/images/media/meals/g046bb1663960946.jpg" alt="" class="w-100">
-                <div
-                  class="overlay-image position-absolute w-100 h-100 d-flex justify-content-center align-items-center ">
-                  <h2 class="fs-bold">Sushi</h2>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <div class="d-none show-info">
+    <div class="show-info | d-none">
       <div class="container">
         <div class="row text-white">
           <div class="left-info col-12 col-md-3 col-lg-4">
@@ -197,7 +199,7 @@
         </div>
       </div>
     </div>
-    <section class="d-none contact">
+    <section class="contact | d-none">
       <div class="container d-flex justify-content-center align-items-center">
         <form action="" class="w-75 row gx-3-0 gx-sm-3 gy-3 flex-wrap ">
           <div class="col-12 col-md-6">
@@ -223,7 +225,7 @@
         </form>
       </div>
     </section>
-    <section class="Search py-3">
+    <section class="Search | d-none py-3">
       <div class="container d-flex justify-content-center align-items-center">
         <form action="" class="w-75 row gx-3-0 gx-sm-3 gy-3 flex-wrap ">
           <div class="col-12 col-md-6">

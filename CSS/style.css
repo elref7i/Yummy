@@ -4,7 +4,10 @@ a {
 .cursor-p {
   cursor: pointer;
 }
-
+aside {
+  z-index: 999;
+  left: -312.056px;
+}
 .overlay-image {
   background-color: #fffa;
   bottom: -100%;
@@ -15,4 +18,9 @@ a {
 }
 .w-fit {
   width: fit-content;
+}
+
+.close-menue {
+  display: none;
+  /* display: block; */
 }
