@@ -7,6 +7,8 @@ const urls = {
   areas: 'https://www.themealdb.com/api/json/v1/1/list.php?a=list',
   filterAreas: 'https://www.themealdb.com/api/json/v1/1/filter.php?a=Canadian',
   Ingredients: 'https://www.themealdb.com/api/json/v1/1/list.php?i=list',
+  filteringredient:
+    'https://www.themealdb.com/api/json/v1/1/filter.php?i=Salmon',
 };
 
 const row = $('<div class="row gx-0 gx-sm-3 gy-3 pt-4"></div>');
@@ -26,7 +28,7 @@ const allData = async (url) => {
       //! console.log(data.categories);
       displayCategories(data.categories);
     } else if (url === urls.filterCatogry) {
-      //! console.log(data.meals);
+      console.log(data.meals);
       displayhome(data.meals);
     } else if (url === urls.areas) {
       //! console.log(data.meals.length);
@@ -36,6 +38,11 @@ const allData = async (url) => {
     } else if (url === urls.Ingredients) {
       console.log(data.meals[0]);
       displayIngredients(data.meals);
+    } else if (url === urls.filteringredient) {
+      console.log(data.meals);
+      if (data.meals !== null) {
+        displayhome(data.meals);
+      }
     }
   } catch (error) {
     console.log('Error fatching data:', error);
@@ -63,12 +70,18 @@ allData(urls.home);
 //* Icon close in Details-------------------------- */
 $('.link-website').on('click', function () {
   $('.show-info').hide(100);
+  $('.contact').hide();
+  $('.home').show();
   if ($(this).attr('data-target') === 'categories') {
     allData(urls.categories);
   } else if ($(this).attr('data-target') === 'area') {
     allData(urls.areas);
   } else if ($(this).attr('data-target') === 'ingradients') {
     allData(urls.Ingredients);
+  } else if ($(this).attr('data-target') === 'contact') {
+    $(row).html('');
+    $('.contact').show();
+    $('.home').hide();
   }
 });
 
@@ -158,9 +171,9 @@ function letterLimit(pharagraph) {
 }
 function displayIngredients(ingredients) {
   $(row).html('');
-  for (let i = 0; i < 25; i++) {
-    let areas = `
-      <div class="| col-12 col-md-4 col-lg-3" onclick='getNameFilter("${
+  for (let i = 0; i < 23; i++) {
+    let IngredientCol = `
+      <div class="| col-12 col-md-4 col-lg-3" onclick='getNameFilterIngredients("${
         ingredients[i].strIngredient
       }")' >
             <div class="inner p-3">
@@ -175,7 +188,7 @@ function displayIngredients(ingredients) {
               </div>
             </div>
           </div>`;
-    $(row).append(areas);
+    $(row).append(IngredientCol);
   }
 }
 //* display Detailes------*//
@@ -254,4 +267,9 @@ function getNameFilter(nameFilter) {
   console.log(nameFilter);
   urls.filterCatogry = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${nameFilter}`;
   allData(urls.filterCatogry);
+}
+function getNameFilterIngredients(nameFilter) {
+  console.log(nameFilter);
+  urls.filteringredient = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${nameFilter}`;
+  allData(urls.filteringredient);
 }

@@ -88,3 +88,6 @@ aside {
   object-fit: contain;
   object-position: center;
 }
+.contact {
+  display: none;
+}
