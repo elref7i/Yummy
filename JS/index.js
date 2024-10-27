@@ -3,52 +3,48 @@
 const urls = {
   home: `https://www.themealdb.com/api/json/v1/1/search.php?s=`,
   categories: 'https://www.themealdb.com/api/json/v1/1/categories.php',
+  filterCatogry: 'https://www.themealdb.com/api/json/v1/1/filter.php?c=beef',
 };
 
 const row = $('<div class="row gx-0 gx-sm-3 gy-3 pt-4"></div>');
 $('.home .container').append(row);
 
 const allData = async (url) => {
-  let data = null;
-  // let typePage = type;
+  $('.loading-screen').show();
   try {
     const response = await fetch(url);
-    if (data === null) {
-      $('body').css({ backgroundColor: '#000' });
-    } else {
-      $('body').css({ backgroundColor: '#fff' });
-    }
-    data = await response.json();
-    console.log(url === urls.categories);
+    const data = await response.json();
+
+    //! console.log(url === urls.categories);
     if (url === urls.home) {
       displayhome(data.meals);
-      console.log(data.meals);
+      // ! console.log(data.meals);
     } else if (url === urls.categories) {
-      console.log(data.categories);
+      //! console.log(data.categories);
       displayCategories(data.categories);
+    } else if (url === urls.filterCatogry) {
+      console.log(data.meals);
+      displayhome(data.meals);
     }
   } catch (error) {
     console.log('Error fatching data:', error);
   }
+  $('.loading-screen').hide();
 };
 
 const details = async (id) => {
-  let data = null;
+  $('.loading-screen').show();
   try {
     const response = await fetch(
       `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`
     );
-    if (data === null) {
-      $('body').css({ backgroundColor: '#000' });
-    } else {
-      $('body').css({ backgroundColor: '#fff' });
-    }
-    data = await response.json();
-    console.log(data.meals[0]);
+    const data = await response.json();
+    // !console.log(data.meals[0]);
     displayDetailes(data.meals[0]);
   } catch (error) {
     console.log('Error fatching details:', error);
   }
+  $('.loading-screen').hide();
 };
 
 allData(urls.home);
@@ -74,7 +70,6 @@ function displayhome(homeData) {
 }
 
 function getIdDetails(id) {
-  console.log(id);
   details(id);
 }
 function displayDetailes(data) {
@@ -141,7 +136,7 @@ function displayCategories(dataCategorie) {
   $(row).html('');
   for (let i = 0; i < dataCategorie.length; i++) {
     let categorie = `
-    <div class="| col-12 col-md-4 col-lg-3">
+    <div class="| col-12 col-md-4 col-lg-3" onclick='getNameFilter("${dataCategorie[i].strCategory}")'>
       <div class="inner p-3">
         <div class="image-foot cursor-p | rounded-5 overflow-hidden position-relative shadow-lg ">
           <img src="${dataCategorie[i].strCategoryThumb}" alt="" class="w-100">
@@ -158,10 +153,16 @@ function displayCategories(dataCategorie) {
 }
 
 $('.link-website').on('click', function () {
+  $('.show-info').hide(100);
   if ($(this).attr('data-target') === 'categories') {
     allData(urls.categories);
   }
 });
+function getNameFilter(nameFilter) {
+  console.log(nameFilter);
+  urls.filterCatogry = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${nameFilter}`;
+  allData(urls.filterCatogry);
+}
 
 //*Sidebar-------------------------------*//
 $('.icon-bar i').on('click', function (e) {
