@@ -9,12 +9,22 @@ const urls = {
   Ingredients: 'https://www.themealdb.com/api/json/v1/1/list.php?i=list',
   filteringredient:
     'https://www.themealdb.com/api/json/v1/1/filter.php?i=Salmon',
+  searchByName:
+    'https://www.themealdb.com/api/json/v1/1/search.php?s=Arrabiata',
 };
 
 const row = $('<div class="row gx-0 gx-sm-3 gy-3 pt-4"></div>');
 $('.home .container').append(row);
-const allData = async (url) => {
+function showLoading() {
   $('.loading-screen').show();
+  $('html').css({ overflow: 'hidden' });
+}
+function hideLoading() {
+  $('.loading-screen').hide();
+  $('html').css({ overflow: 'auto' });
+}
+const allData = async (url) => {
+  showLoading();
   try {
     const response = await fetch(url);
     const data = await response.json();
@@ -46,11 +56,11 @@ const allData = async (url) => {
   } catch (error) {
     console.log('Error fatching data:', error);
   }
-  $('.loading-screen').hide();
+  hideLoading();
 };
 
 const details = async (id) => {
-  $('.loading-screen').show();
+  showLoading();
   try {
     const response = await fetch(
       `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`
@@ -61,7 +71,7 @@ const details = async (id) => {
   } catch (error) {
     console.log('Error fatching details:', error);
   }
-  $('.loading-screen').hide();
+  hideLoading();
 };
 
 allData(urls.home);
