@@ -13,7 +13,6 @@ const urls = {
 
 const row = $('<div class="row gx-0 gx-sm-3 gy-3 pt-4"></div>');
 $('.home .container').append(row);
-
 const allData = async (url) => {
   $('.loading-screen').show();
   try {
@@ -66,21 +65,31 @@ const details = async (id) => {
 };
 
 allData(urls.home);
-
+function hideSection() {
+  $('.contact').hide();
+  $('.search').hide();
+}
 //* Icon close in Details-------------------------- */
 $('.link-website').on('click', function () {
   $('.show-info').hide(100);
   $('.contact').hide();
+  $('.search').hide();
   $('.home').show();
   if ($(this).attr('data-target') === 'categories') {
+    hideSection();
     allData(urls.categories);
   } else if ($(this).attr('data-target') === 'area') {
+    hideSection();
     allData(urls.areas);
   } else if ($(this).attr('data-target') === 'ingradients') {
+    hideSection();
     allData(urls.Ingredients);
   } else if ($(this).attr('data-target') === 'contact') {
-    $(row).html('');
+    // $(row).html('');
     $('.contact').show();
+    $('.home').hide();
+  } else {
+    $('.search').show();
     $('.home').hide();
   }
 });
