@@ -5,6 +5,7 @@ const urls = {
   categories: 'https://www.themealdb.com/api/json/v1/1/categories.php',
   filterCatogry: 'https://www.themealdb.com/api/json/v1/1/filter.php?c=beef',
   areas: 'https://www.themealdb.com/api/json/v1/1/list.php?a=list',
+  filterAreas: 'https://www.themealdb.com/api/json/v1/1/filter.php?a=Canadian',
 };
 
 const row = $('<div class="row gx-0 gx-sm-3 gy-3 pt-4"></div>');
@@ -24,11 +25,13 @@ const allData = async (url) => {
       //! console.log(data.categories);
       displayCategories(data.categories);
     } else if (url === urls.filterCatogry) {
-      console.log(data.meals);
+      //! console.log(data.meals);
       displayhome(data.meals);
     } else if (url === urls.areas) {
       console.log(data.meals.length);
       displayarea(data.meals);
+    } else if (url === urls.filterAreas) {
+      displayhome(data.meals);
     }
   } catch (error) {
     console.log('Error fatching data:', error);
@@ -121,11 +124,11 @@ function displayarea(dataArea) {
   $(row).html('');
   for (let i = 0; i < dataArea.length; i++) {
     let areas = `
-    <div class="| col-12 col-md-3 col-lg-2">
+    <div class="| col-12 col-md-3 col-lg-2" onclick='getNameArea("${dataArea[i].strArea}")'>
             <div class="inner p-3">
               <div class="image-foot cursor-p | rounded-5 overflow-hidden position-relative shadow-lg ">
                 <img
-                  src="imgs/kisspng-logo-home-chef-brand-product-font-pricing-lead-honestly-5bf8c5a67b65f0.3058441415430301825055.png"
+                  src="imgs/chef cook sticker logo clipart.png"
                   alt="" class="w-100">
                 <div class="overlay-image bg-white text-black w-100 h-100 text-center p-2">
                   <h2 class="fs-bold">${dataArea[i].strArea}</h2>
@@ -200,9 +203,14 @@ function displayDetailes(data) {
 function getIdDetails(id) {
   details(id);
 }
+function getNameArea(nameArea) {
+  console.log(nameArea);
+  urls.filterAreas = `https://www.themealdb.com/api/json/v1/1/filter.php?a=${nameArea}`;
+  allData(urls.filterAreas);
+}
 //* function type on click get name gategories------------------*//
 function getNameFilter(nameFilter) {
   console.log(nameFilter);
   urls.filterCatogry = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${nameFilter}`;
-  allData(urls.filterCatogry);
+  allData(urls.filt0erCatogry);
 }
