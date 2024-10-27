@@ -71,7 +71,23 @@ const details = async (id) => {
   }
   hideLoading();
 };
-
+const searchMeals = async (query) => {
+  const searchUrl = `${urls.home}${query}`;
+  try {
+    showLoading();
+    const response = await fetch(searchUrl);
+    const data = await response.json();
+    if (data.meals) {
+      displayhome(data.meals);
+    } else {
+      $(row).html('<p class="text-danger">No meals found.</p>');
+    }
+  } catch (error) {
+    console.log('Error fetching meals:', error);
+  } finally {
+    hideLoading();
+  }
+};
 allData(urls.home);
 //* Icon close in Details-------------------------- */
 $('.link-website').on('click', function () {
@@ -288,4 +304,24 @@ function getNameFilterIngredients(nameFilter) {
   allData(urls.filteringredient);
 }
 
-$('.by-name').on('input', function () {});
+$('.by-name').on('input', function () {
+  const searchQuery = $(this).val().trim();
+  if (searchQuery) {
+    searchMeals(searchQuery);
+  } else {
+    allData(urls.home);
+  }
+});
+$('.by-first-litter').on('input', function () {
+  let searchQuery = $(this).val().trim();
+  if (searchQuery.length > 1) {
+    searchQuery = searchQuery.substr(0, 1);
+    $(this).val(searchQuery);
+  }
+  if (searchQuery.length === 1) {
+    searchMeals(searchQuery);
+  }
+  if (!searchQuery) {
+    allData(urls.home);
+  }
+});
