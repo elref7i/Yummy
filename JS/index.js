@@ -4,6 +4,7 @@ const urls = {
   home: `https://www.themealdb.com/api/json/v1/1/search.php?s=`,
   categories: 'https://www.themealdb.com/api/json/v1/1/categories.php',
   filterCatogry: 'https://www.themealdb.com/api/json/v1/1/filter.php?c=beef',
+  areas: 'https://www.themealdb.com/api/json/v1/1/list.php?a=list',
 };
 
 const row = $('<div class="row gx-0 gx-sm-3 gy-3 pt-4"></div>');
@@ -25,6 +26,9 @@ const allData = async (url) => {
     } else if (url === urls.filterCatogry) {
       console.log(data.meals);
       displayhome(data.meals);
+    } else if (url === urls.areas) {
+      console.log(data.meals.length);
+      displayarea(data.meals);
     }
   } catch (error) {
     console.log('Error fatching data:', error);
@@ -49,6 +53,31 @@ const details = async (id) => {
 
 allData(urls.home);
 
+//* Icon close in Details-------------------------- */
+$('.link-website').on('click', function () {
+  $('.show-info').hide(100);
+  if ($(this).attr('data-target') === 'categories') {
+    allData(urls.categories);
+  } else if ($(this).attr('data-target') === 'area') allData(urls.areas);
+});
+
+//*Sidebar-------------------------------*//
+$('.icon-bar i').on('click', function (e) {
+  if ($(this).attr('data-open') === 'true') {
+    $('aside').animate({ left: '0px' }, 400);
+    $(this).hide(100, function () {
+      $('.close-menue').css({ display: 'block' });
+    });
+  } else {
+    $('aside').animate({ left: '-312.056px' });
+    $(this).hide(100, function () {
+      $('.open-menue').css({ display: 'block' });
+    });
+  }
+});
+
+// *** display Home -------- *//
+
 function displayhome(homeData) {
   $(row).html('');
   for (let i = 0; i < homeData.length; i++) {
@@ -68,10 +97,46 @@ function displayhome(homeData) {
     $(row).append(meal);
   }
 }
-
-function getIdDetails(id) {
-  details(id);
+// *** display Categotries -------- *//
+function displayCategories(dataCategorie) {
+  $(row).html('');
+  for (let i = 0; i < dataCategorie.length; i++) {
+    let categorie = `
+    <div class="| col-12 col-md-4 col-lg-3" onclick='getNameFilter("${dataCategorie[i].strCategory}")'>
+      <div class="inner p-3">
+        <div class="image-foot cursor-p | rounded-5 overflow-hidden position-relative shadow-lg ">
+          <img src="${dataCategorie[i].strCategoryThumb}" alt="" class="w-100">
+          <div class="overlay-image position-absolute w-100 h-100 text-center p-2">
+            <h2 class="fs-bold">${dataCategorie[i].strCategory}</h2>
+            <p>
+              ${dataCategorie[i].strCategoryDescription}</p>
+          </div>
+        </div>
+      </div>
+    </div>`;
+    $(row).append(categorie);
+  }
 }
+function displayarea(dataArea) {
+  $(row).html('');
+  for (let i = 0; i < dataArea.length; i++) {
+    let areas = `
+    <div class="| col-12 col-md-3 col-lg-2">
+            <div class="inner p-3">
+              <div class="image-foot cursor-p | rounded-5 overflow-hidden position-relative shadow-lg ">
+                <img
+                  src="imgs/kisspng-logo-home-chef-brand-product-font-pricing-lead-honestly-5bf8c5a67b65f0.3058441415430301825055.png"
+                  alt="" class="w-100">
+                <div class="overlay-image bg-white text-black w-100 h-100 text-center p-2">
+                  <h2 class="fs-bold">${dataArea[i].strArea}</h2>
+                </div>
+              </div>
+            </div>
+          </div>`;
+    $(row).append(areas);
+  }
+}
+//* display Detailes------*//
 function displayDetailes(data) {
   $(row).html('');
   let showdetailes = `
@@ -131,50 +196,13 @@ function displayDetailes(data) {
     }
   }
 }
-//*------------------------------*//
-function displayCategories(dataCategorie) {
-  $(row).html('');
-  for (let i = 0; i < dataCategorie.length; i++) {
-    let categorie = `
-    <div class="| col-12 col-md-4 col-lg-3" onclick='getNameFilter("${dataCategorie[i].strCategory}")'>
-      <div class="inner p-3">
-        <div class="image-foot cursor-p | rounded-5 overflow-hidden position-relative shadow-lg ">
-          <img src="${dataCategorie[i].strCategoryThumb}" alt="" class="w-100">
-          <div class="overlay-image position-absolute w-100 h-100 text-center p-2">
-            <h2 class="fs-bold">${dataCategorie[i].strCategory}</h2>
-            <p>
-              ${dataCategorie[i].strCategoryDescription}</p>
-          </div>
-        </div>
-      </div>
-    </div>`;
-    $(row).append(categorie);
-  }
+//* get id categories ------*//
+function getIdDetails(id) {
+  details(id);
 }
-
-$('.link-website').on('click', function () {
-  $('.show-info').hide(100);
-  if ($(this).attr('data-target') === 'categories') {
-    allData(urls.categories);
-  }
-});
+//* function type on click get name gategories------------------*//
 function getNameFilter(nameFilter) {
   console.log(nameFilter);
   urls.filterCatogry = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${nameFilter}`;
   allData(urls.filterCatogry);
 }
-
-//*Sidebar-------------------------------*//
-$('.icon-bar i').on('click', function (e) {
-  if ($(this).attr('data-open') === 'true') {
-    $('aside').animate({ left: '0px' }, 400);
-    $(this).hide(100, function () {
-      $('.close-menue').css({ display: 'block' });
-    });
-  } else {
-    $('aside').animate({ left: '-312.056px' });
-    $(this).hide(100, function () {
-      $('.open-menue').css({ display: 'block' });
-    });
-  }
-});
