@@ -6,6 +6,7 @@ const urls = {
   filterCatogry: 'https://www.themealdb.com/api/json/v1/1/filter.php?c=beef',
   areas: 'https://www.themealdb.com/api/json/v1/1/list.php?a=list',
   filterAreas: 'https://www.themealdb.com/api/json/v1/1/filter.php?a=Canadian',
+  Ingredients: 'https://www.themealdb.com/api/json/v1/1/list.php?i=list',
 };
 
 const row = $('<div class="row gx-0 gx-sm-3 gy-3 pt-4"></div>');
@@ -28,10 +29,13 @@ const allData = async (url) => {
       //! console.log(data.meals);
       displayhome(data.meals);
     } else if (url === urls.areas) {
-      console.log(data.meals.length);
-      displayarea(data.meals);
+      //! console.log(data.meals.length);
+      displayAreas(data.meals);
     } else if (url === urls.filterAreas) {
       displayhome(data.meals);
+    } else if (url === urls.Ingredients) {
+      console.log(data.meals[0]);
+      displayIngredients(data.meals);
     }
   } catch (error) {
     console.log('Error fatching data:', error);
@@ -61,7 +65,11 @@ $('.link-website').on('click', function () {
   $('.show-info').hide(100);
   if ($(this).attr('data-target') === 'categories') {
     allData(urls.categories);
-  } else if ($(this).attr('data-target') === 'area') allData(urls.areas);
+  } else if ($(this).attr('data-target') === 'area') {
+    allData(urls.areas);
+  } else if ($(this).attr('data-target') === 'ingradients') {
+    allData(urls.Ingredients);
+  }
 });
 
 //*Sidebar-------------------------------*//
@@ -120,7 +128,7 @@ function displayCategories(dataCategorie) {
     $(row).append(categorie);
   }
 }
-function displayarea(dataArea) {
+function displayAreas(dataArea) {
   $(row).html('');
   for (let i = 0; i < dataArea.length; i++) {
     let areas = `
@@ -132,6 +140,37 @@ function displayarea(dataArea) {
                   alt="" class="w-100">
                 <div class="overlay-image bg-white text-black w-100 h-100 text-center p-2">
                   <h2 class="fs-bold">${dataArea[i].strArea}</h2>
+                </div>
+              </div>
+            </div>
+          </div>`;
+    $(row).append(areas);
+  }
+}
+function letterLimit(pharagraph) {
+  let stringSplit = pharagraph.split(' ');
+  let limit = [];
+  for (let i = 0; i < 25; i++) {
+    limit.push(stringSplit[i]);
+  }
+
+  return limit.join(' ');
+}
+function displayIngredients(ingredients) {
+  $(row).html('');
+  for (let i = 0; i < 25; i++) {
+    let areas = `
+      <div class="| col-12 col-md-4 col-lg-3" onclick='getNameFilter("${
+        ingredients[i].strIngredient
+      }")' >
+            <div class="inner p-3">
+              <div class="image-foot cursor-p | rounded-5 overflow-hidden position-relative shadow-lg ">
+                <img src="imgs/spaghetti-with-vegetables-cooking-in-a-pan-png.webp" alt="" class="image-Ingredient ">
+                <div class="text-black bg-white w-100 h-100 text-center p-2">
+                  <h2 class="fs-bold">${ingredients[i].strIngredient}</h2>
+                  <p class='text-muted'>${letterLimit(
+                    ingredients[i].strDescription
+                  )}</p>
                 </div>
               </div>
             </div>
@@ -199,6 +238,7 @@ function displayDetailes(data) {
     }
   }
 }
+
 //* get id categories ------*//
 function getIdDetails(id) {
   details(id);
@@ -208,9 +248,10 @@ function getNameArea(nameArea) {
   urls.filterAreas = `https://www.themealdb.com/api/json/v1/1/filter.php?a=${nameArea}`;
   allData(urls.filterAreas);
 }
+
 //* function type on click get name gategories------------------*//
 function getNameFilter(nameFilter) {
   console.log(nameFilter);
   urls.filterCatogry = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${nameFilter}`;
-  allData(urls.filt0erCatogry);
+  allData(urls.filterCatogry);
 }
