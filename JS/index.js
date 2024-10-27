@@ -9,8 +9,6 @@ const urls = {
   Ingredients: 'https://www.themealdb.com/api/json/v1/1/list.php?i=list',
   filteringredient:
     'https://www.themealdb.com/api/json/v1/1/filter.php?i=Salmon',
-  searchByName:
-    'https://www.themealdb.com/api/json/v1/1/search.php?s=Arrabiata',
 };
 
 const row = $('<div class="row gx-0 gx-sm-3 gy-3 pt-4"></div>');
@@ -31,8 +29,8 @@ const allData = async (url) => {
 
     //! console.log(url === urls.categories);
     if (url === urls.home) {
+      console.log(data.meals);
       displayhome(data.meals);
-      // ! console.log(data.meals);
     } else if (url === urls.categories) {
       //! console.log(data.categories);
       displayCategories(data.categories);
@@ -75,32 +73,29 @@ const details = async (id) => {
 };
 
 allData(urls.home);
-function hideSection() {
-  $('.contact').hide();
-  $('.search').hide();
-}
 //* Icon close in Details-------------------------- */
 $('.link-website').on('click', function () {
   $('.show-info').hide(100);
   $('.contact').hide();
-  $('.search').hide();
   $('.home').show();
   if ($(this).attr('data-target') === 'categories') {
-    hideSection();
+    // hideSection();
     allData(urls.categories);
   } else if ($(this).attr('data-target') === 'area') {
-    hideSection();
+    // hideSection();
     allData(urls.areas);
   } else if ($(this).attr('data-target') === 'ingradients') {
-    hideSection();
+    // hideSection();
     allData(urls.Ingredients);
   } else if ($(this).attr('data-target') === 'contact') {
     // $(row).html('');
     $('.contact').show();
     $('.home').hide();
-  } else {
-    $('.search').show();
-    $('.home').hide();
+    $('.form-search').hide();
+  } else if ($(this).attr('data-target') === 'home') {
+    $('.home').show();
+    $('.form-search').show();
+    allData(urls.home);
   }
 });
 
@@ -292,3 +287,5 @@ function getNameFilterIngredients(nameFilter) {
   urls.filteringredient = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${nameFilter}`;
   allData(urls.filteringredient);
 }
+
+$('.by-name').on('input', function () {});

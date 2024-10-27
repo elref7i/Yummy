@@ -97,3 +97,6 @@ aside {
 .search {
   display: none;
 }
+.input-search::placeholder {
+  color: #fff;
+}
