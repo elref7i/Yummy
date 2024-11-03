@@ -72,6 +72,43 @@ https://routeegy.github.io/YummyExam/
 دي ال API اللي استخدمناها وهي سهله جدا ومش محتاجه API key خالص
 https://www.themealdb.com/api.php
 
-*بعد ما نخلص الامتحان هنرفعه على GitHub ونتأكد انه public ونبعت اللينك على ال mail  
-الديدلاين هيبقى يوم الأحد الساعة  10م 
-ربنا معاكم ❤️
+
+///*
+// function displayCategories(type, dataCategorie) {
+//   $(row).html('');
+//   for (let i = 0; i < dataCategorie.length; i++) {
+//     let categorie = `
+//     <div class="| col-12 col-md-4 col-lg-3" onclick='getNameFilter("${dataCategorie[i].strCategory}")'>
+//       <div class="inner p-3">
+//         <div class="image-foot cursor-p | rounded-5 overflow-hidden position-relative shadow-lg ">
+//           <img src="${dataCategorie[i].strCategoryThumb}" alt="" class="w-100">
+//           <div class="overlay-image position-absolute w-100 h-100 text-center p-2">
+//             <h2 class="fs-bold">${dataCategorie[i].strCategory}</h2>
+//             <p>
+//               ${dataCategorie[i].strCategoryDescription}</p>
+//           </div>
+//         </div>
+//       </div>
+//     </div>`;
+//     $(row).append(categorie);
+//   }
+// }
+// function displayAreas(type, dataArea) {
+//   $(row).html('');
+//   for (let i = 0; i < dataArea.length; i++) {
+//     let areas = `
+//     <div class="| col-12 col-md-3 col-lg-2" onclick='getNameArea("${dataArea[i].strArea}")'>
+//             <div class="inner p-3">
+//               <div class="image-foot cursor-p | rounded-5 overflow-hidden position-relative shadow-lg ">
+//                 <img
+//                   src="imgs/chef cook sticker logo clipart.png"
+//                   alt="" class="w-100">
+//                 <div class="overlay-image bg-white text-black w-100 h-100 text-center p-2">
+//                   <h2 class="fs-bold">${dataArea[i].strArea}</h2>
+//                 </div>
+//               </div>
+//             </div>
+//           </div>`;
+//     $(row).append(areas);
+//   }
+// }
