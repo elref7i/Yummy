@@ -13,6 +13,9 @@ const urls = {
 
 const row = $('<div class="row gx-0 gx-sm-3 gy-3 pt-4"></div>');
 $('.home .container').append(row);
+
+let allDataHome;
+
 function showLoading() {
   $('.loading-screen').show();
   $('html').css({ overflow: 'hidden' });
@@ -22,15 +25,16 @@ function hideLoading() {
   $('html').css({ overflow: 'auto' });
 }
 const allData = async (url) => {
-  showLoading();
   try {
+    showLoading();
     const response = await fetch(url);
     const data = await response.json();
     //! console.log(url === urls.categories);
     if (url === urls.home) {
-      //! console.log(data.meals);
+      // console.log(data.meals);
       displayhome('home', data.meals);
-      // searchHomeMeal(data.meal);
+      // searchByName(data.meals);
+      allDataHome = data.meals;
     } else if (url === urls.categories) {
       //! console.log(data.categories);
       displayhome('categories', data.categories);
@@ -53,13 +57,29 @@ const allData = async (url) => {
     }
   } catch (error) {
     console.log('Error fatching data:', error);
+  } finally {
+    hideLoading();
   }
-  hideLoading();
 };
 
-const details = async (id) => {
-  showLoading();
+const searchMeals = async (query) => {
+  const searchUrl = `${urls.home}${query.toLowerCase()}`;
   try {
+    showLoading();
+    const response = await fetch(searchUrl);
+    const data = await response.json();
+    console.log(data.meals);
+    displayhome('home', data.meals);
+  } catch (error) {
+    console.log('Error fetching meals:', error);
+  } finally {
+    hideLoading();
+  }
+};
+// searchMeals('Sushi');
+const details = async (id) => {
+  try {
+    showLoading();
     const response = await fetch(
       `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`
     );
@@ -68,31 +88,11 @@ const details = async (id) => {
     displayDetailes(data.meals[0]);
   } catch (error) {
     console.log('Error fatching details:', error);
-  }
-  hideLoading();
-};
-
-const searchMeals = async (query) => {
-  const searchUrl = `${urls.home}${query}`;
-  try {
-    showLoading();
-    const response = await fetch(searchUrl);
-    const data = await response.json();
-    console.log();
-    if (data.meals) {
-      displayhome(data.meals);
-    } else {
-      $(row).html('<p class="text-danger">No meals found.</p>');
-    }
-  } catch (error) {
-    console.log('Error fetching meals:', error);
   } finally {
     hideLoading();
   }
 };
-
 allData(urls.home);
-
 //*Sidebar-------------------------------*//
 $('.icon-bar i').on('click', function (e) {
   if ($(this).attr('data-open') === 'true') {
@@ -373,7 +373,17 @@ function getNameFilterIngredients(nameFilter) {
   urls.filteringredient = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${nameFilter}`;
   allData(urls.filteringredient);
 }
+// function searchByName() {
+//   console.log(allDataHome);
+// }
 
 $('.by-name').on('input', function () {
-  console.log('refai');
+  let searchValue = $(this).val().toLowerCase();
+  let filteredMeals = allDataHome.filter((meal) =>
+    meal.strMeal.toLowerCase().includes(searchValue)
+  );
+  console.log(filteredMeals);
+
+  // Now display all filtered meals
+  displayhome('home', filteredMeals);
 });
