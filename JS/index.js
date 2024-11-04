@@ -13,6 +13,9 @@ const urls = {
 
 const row = $('<div class="row gx-0 gx-sm-3 gy-3 pt-4"></div>');
 $('.home .container').append(row);
+const pharagraphNotFouned = $(
+  '<p class="text-danger fs-5 fond-bold">Not Founed Meal</p>'
+);
 
 let allDataHome;
 
@@ -62,20 +65,6 @@ const allData = async (url) => {
   }
 };
 
-const searchMeals = async (query) => {
-  const searchUrl = `${urls.home}${query.toLowerCase()}`;
-  try {
-    showLoading();
-    const response = await fetch(searchUrl);
-    const data = await response.json();
-    console.log(data.meals);
-    displayhome('home', data.meals);
-  } catch (error) {
-    console.log('Error fetching meals:', error);
-  } finally {
-    hideLoading();
-  }
-};
 // searchMeals('Sushi');
 const details = async (id) => {
   try {
@@ -164,7 +153,12 @@ function displayhome(type, data) {
     type === 'filteringredient' ||
     type === 'filterCatogry'
   ) {
-    loopdata(data);
+    if (data.length === 0) {
+      $(row).html('');
+      $(row).append(pharagraphNotFouned);
+    } else {
+      loopdata(data);
+    }
   } else if (type === 'categories') {
     for (let i = 0; i < data.length; i++) {
       let categorie = `
@@ -378,12 +372,21 @@ function getNameFilterIngredients(nameFilter) {
 // }
 
 $('.by-name').on('input', function () {
-  let searchValue = $(this).val().toLowerCase();
-  let filteredMeals = allDataHome.filter((meal) =>
+  const searchValue = $(this).val().toLowerCase();
+  let filterNameMeals = allDataHome.filter((meal) =>
     meal.strMeal.toLowerCase().includes(searchValue)
   );
-  console.log(filteredMeals);
 
-  // Now display all filtered meals
-  displayhome('home', filteredMeals);
+  displayhome('home', filterNameMeals);
 });
+
+// $('.by-name').on('input', function () {
+//   let searchValue = $(this).val().toLowerCase();
+//   let filteredMeals = allDataHome.filter((meal) =>
+//     meal.strMeal.toLowerCase().includes(searchValue)
+//   );
+//   console.log(filteredMeals);
+
+//   // Now display all filtered meals
+//   displayhome('home', filteredMeals);
+// });
