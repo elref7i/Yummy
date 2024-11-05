@@ -263,68 +263,53 @@ function letterLimit(pharagraph) {
 
   return limit.join(' ');
 }
-// function displayIngredients(type, ingredients) {
-//   $(row).html('');
-//   for (let i = 0; i < 23; i++) {
-//     let IngredientCol = `
-//       <div class="| col-12 col-md-4 col-lg-3" onclick='getNameFilterIngredients("${
-//         ingredients[i].strIngredient
-//       }")' >
-//             <div class="inner p-3">
-//               <div class="image-foot cursor-p | rounded-5 overflow-hidden position-relative shadow-lg ">
-//                 <img src="imgs/spaghetti-with-vegetables-cooking-in-a-pan-png.webp" alt="" class="image-Ingredient ">
-//                 <div class="text-black bg-white w-100 h-100 text-center p-2">
-//                   <h2 class="fs-bold">${ingredients[i].strIngredient}</h2>
-//                   <p class='text-muted'>${letterLimit(
-//                     ingredients[i].strDescription
-//                   )}</p>
-//                 </div>
-//               </div>
-//             </div>
-//           </div>`;
-//     $(row).append(IngredientCol);
-//   }
-// }
-//* display Detailes------*//
 
+//* display Detailes------*//
 function displayDetailes(data) {
-  $(row).html('');
+  $('.detailes-screen').html('');
   let showdetailes = `
-  <div class="show-info  position-absolute end-0 start-0  top-0 pt-5 ">
-    <div class="container d-flex justify-content-center align-items-center">
-      <div class="row gx-0 gx-sm-3 gy-3 text-white  ">
-        <div class="left-info col-12 col-md-3 col-lg-4">
-          <div class="overflow-hidden rounded-3 mb-2 ">
-            <img src="${data.strMealThumb}" class="w-100" alt="">
-          </div>
-          <h3>${data.strMeal}</h3>
-        </div>
-        <div class="right-info col-12 col-md-9 col-lg-8">
-          <h4>instructions</h4>
-          <p>${data.strInstructions}</p>
-          <h3>Area<span class="px-2">:</span>${data.strArea}</h3>
-          <h3>Category<span class="px-2">:</span>${data.strCategory}</h3>
-          <h3>Recipes <span class="ps-2">:</span></h3>
-          <ul class="recips-list list-unstyled d-flex gap-3 flex-wrap">
-          </ul>
-          <h3>Tags<span class="ps-2">:</span></h3>
-          <ul class="tags-list list-unstyled d-flex flex-wrap gap-3">
-          </ul>
-          <div class="link-source py-2">
-            <a href="${data.strSource}" target='_blank' class="btn btn-success">Source</a>
-            <a href="${data.strYoutube}" target='_blank' class="btn btn-danger">Youtube</a>
-          </div>
-        </div>
-      </div>
-    </div>
-    <i
-      class="close-detailes | fa-solid fa-x text-white  fs-3 position-absolute top-0 end-0 m-4 translate-middle- cursor-p"></i>
+  <div class="show-info">
+  <div class="container d-flex justify-content-center align-items-center">
+  <div class="row gx-0 gx-sm-3 gy-3 text-white  ">
+  <div class="left-info col-12 col-md-3 col-lg-4">
+  <div class="overflow-hidden rounded-3 mb-2 ">
+  <img src="${data.strMealThumb}" class="w-100" alt="">
+  </div>
+  <h3>${data.strMeal}</h3>
+  </div>
+  <div class="right-info col-12 col-md-9 col-lg-8">
+  <h4>instructions</h4>
+  <p>${data.strInstructions}</p>
+  <h3>Area<span class="px-2">:</span>${data.strArea}</h3>
+  <h3>Category<span class="px-2">:</span>${data.strCategory}</h3>
+  <h3>Recipes <span class="ps-2">:</span></h3>
+  <ul class="recips-list list-unstyled d-flex gap-3 flex-wrap">
+  </ul>
+  <h3>Tags<span class="ps-2">:</span></h3>
+  <ul class="tags-list list-unstyled d-flex flex-wrap gap-3">
+  </ul>
+  <div class="link-source py-2">
+  <a href="${data.strSource}" target='_blank' class="btn btn-success">Source</a>
+  <a href="${data.strYoutube}" target='_blank' class="btn btn-danger">Youtube</a>
+  </div>
+  </div>
+  </div>
+  </div>
+  <i
+  class="close-detailes | fa-solid fa-x text-white  fs-3 position-absolute top-0 end-0 m-4 translate-middle- cursor-p"></i>
   </div>
   `;
-  $('body').append(showdetailes);
+  let topWindow = $(window).scrollTop();
+  console.log(topWindow);
+  $('.detailes-screen').css({ top: `${topWindow}px` });
+  $('.detailes-screen').append(showdetailes);
+  $('.detailes-screen').slideDown(function () {
+    $('html').css({ overflow: 'hidden' });
+  });
   $('.close-detailes').on('click', function () {
-    $('.show-info').hide(100);
-    allData(urls.home);
+    $('.detailes-screen').slideUp(function () {
+      $('html').css({ overflow: 'auto' });
+    });
   });
   for (let i = 1; i <= 20; i++) {
     let measure = `strMeasure${i}`;
