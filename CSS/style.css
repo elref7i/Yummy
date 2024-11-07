@@ -28,8 +28,17 @@ aside {
   display: none;
   background-color: #000e;
   z-index: 999;
+  overflow: auto;
 }
-
+/* .show-info {
+  overflow-y: auto;
+} */
+.Ingredient p {
+  /* min-height: 40px; */
+  /* background: #000; */
+  height: 100px;
+  overflow: hidden;
+}
 /* *** */
 .loading-screen {
   display: none;

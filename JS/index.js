@@ -65,7 +65,6 @@ const allData = async (url) => {
   }
 };
 
-// searchMeals('Sushi');
 const details = async (id) => {
   try {
     showLoading();
@@ -81,7 +80,8 @@ const details = async (id) => {
     hideLoading();
   }
 };
-allData(urls.home);
+allData(urls.Ingredients);
+
 //*Sidebar-------------------------------*//
 $('.icon-bar i').on('click', function (e) {
   if ($(this).attr('data-open') === 'true') {
@@ -99,7 +99,7 @@ $('.icon-bar i').on('click', function (e) {
 });
 //* Icon close in Details-------------------------- */
 $('.link-website').on('click', function () {
-  $('.show-info').hide(100);
+  $('.detailes-screen').slideUp();
   $('.contact').hide();
   $('.form-search').hide();
   $('.home').show();
@@ -144,6 +144,7 @@ function loopdata(data) {
     $(row).append(meal);
   }
 }
+// *** display Home -------- *//
 
 function displayhome(type, data) {
   $(row).html('');
@@ -199,11 +200,13 @@ function displayhome(type, data) {
         <div class="| col-12 col-md-4 col-lg-3" onclick='getNameFilterIngredients("${
           data[i].strIngredient
         }")' >
-              <div class="inner p-3">
+              <div class=" inner p-3 ">
                 <div class="image-foot cursor-p | rounded-5 overflow-hidden position-relative shadow-lg ">
                   <img src="imgs/spaghetti-with-vegetables-cooking-in-a-pan-png.webp" alt="" class="image-Ingredient ">
                   <div class="text-black bg-white w-100 h-100 text-center p-2">
-                    <h2 class="fs-bold">${data[i].strIngredient}</h2>
+                    <h2 class="fs-bold text-nowrap fs-4 mb-2">${
+                      data[i].strIngredient
+                    }</h2>
                     <p class='text-muted'>${letterLimit(
                       data[i].strDescription
                     )}</p>
@@ -216,44 +219,7 @@ function displayhome(type, data) {
   }
 }
 // *** display Categotries -------- *//
-// function displayCategories(type, dataCategorie) {
-//   $(row).html('');
-//   for (let i = 0; i < dataCategorie.length; i++) {
-//     let categorie = `
-//     <div class="| col-12 col-md-4 col-lg-3" onclick='getNameFilter("${dataCategorie[i].strCategory}")'>
-//       <div class="inner p-3">
-//         <div class="image-foot cursor-p | rounded-5 overflow-hidden position-relative shadow-lg ">
-//           <img src="${dataCategorie[i].strCategoryThumb}" alt="" class="w-100">
-//           <div class="overlay-image position-absolute w-100 h-100 text-center p-2">
-//             <h2 class="fs-bold">${dataCategorie[i].strCategory}</h2>
-//             <p>
-//               ${dataCategorie[i].strCategoryDescription}</p>
-//           </div>
-//         </div>
-//       </div>
-//     </div>`;
-//     $(row).append(categorie);
-//   }
-// }
-// function displayAreas(type, dataArea) {
-//   $(row).html('');
-//   for (let i = 0; i < dataArea.length; i++) {
-//     let areas = `
-//     <div class="| col-12 col-md-3 col-lg-2" onclick='getNameArea("${dataArea[i].strArea}")'>
-//             <div class="inner p-3">
-//               <div class="image-foot cursor-p | rounded-5 overflow-hidden position-relative shadow-lg ">
-//                 <img
-//                   src="imgs/chef cook sticker logo clipart.png"
-//                   alt="" class="w-100">
-//                 <div class="overlay-image bg-white text-black w-100 h-100 text-center p-2">
-//                   <h2 class="fs-bold">${dataArea[i].strArea}</h2>
-//                 </div>
-//               </div>
-//             </div>
-//           </div>`;
-//     $(row).append(areas);
-//   }
-// }
+
 function letterLimit(pharagraph) {
   let stringSplit = pharagraph.split(' ');
   let limit = [];
@@ -268,7 +234,7 @@ function letterLimit(pharagraph) {
 function displayDetailes(data) {
   $('.detailes-screen').html('');
   let showdetailes = `
-  <div class="show-info">
+  <div class="show-info ">
   <div class="container d-flex justify-content-center align-items-center">
   <div class="row gx-0 gx-sm-3 gy-3 text-white  ">
   <div class="left-info col-12 col-md-3 col-lg-4">
@@ -300,7 +266,6 @@ function displayDetailes(data) {
   </div>
   `;
   let topWindow = $(window).scrollTop();
-  console.log(topWindow);
   $('.detailes-screen').css({ top: `${topWindow}px` });
   $('.detailes-screen').append(showdetailes);
   $('.detailes-screen').slideDown(function () {
@@ -352,9 +317,6 @@ function getNameFilterIngredients(nameFilter) {
   urls.filteringredient = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${nameFilter}`;
   allData(urls.filteringredient);
 }
-// function searchByName() {
-//   console.log(allDataHome);
-// }
 
 $('.by-name').on('input', function () {
   const searchValue = $(this).val().toLowerCase();
@@ -364,14 +326,3 @@ $('.by-name').on('input', function () {
 
   displayhome('home', filterNameMeals);
 });
-
-// $('.by-name').on('input', function () {
-//   let searchValue = $(this).val().toLowerCase();
-//   let filteredMeals = allDataHome.filter((meal) =>
-//     meal.strMeal.toLowerCase().includes(searchValue)
-//   );
-//   console.log(filteredMeals);
-
-//   // Now display all filtered meals
-//   displayhome('home', filteredMeals);
-// });
