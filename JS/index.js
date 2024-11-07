@@ -80,7 +80,7 @@ const details = async (id) => {
     hideLoading();
   }
 };
-allData(urls.Ingredients);
+allData(urls.home);
 
 //*Sidebar-------------------------------*//
 $('.icon-bar i').on('click', function (e) {
@@ -318,6 +318,9 @@ function getNameFilterIngredients(nameFilter) {
   allData(urls.filteringredient);
 }
 
+// ~ *** RealTime Search */
+
+// * Search By name Meal
 $('.by-name').on('input', function () {
   const searchValue = $(this).val().toLowerCase();
   let filterNameMeals = allDataHome.filter((meal) =>
@@ -326,3 +329,19 @@ $('.by-name').on('input', function () {
 
   displayhome('home', filterNameMeals);
 });
+// let namePerson = 'refai';
+// console.log(namePerson.slice(0, 1));
+$('.by-first-litter').on('input', function () {
+  let currentValue = $(this).val();
+
+  // Check if the length of the input is greater than 1
+  if (currentValue.length > 1) {
+    // Limit the value to the first character
+    $(this).val(currentValue.slice(0, 1));
+  }
+  let filterFirstCharMeal = allDataHome.filter((f) =>
+    f.strMeal.slice(0, 1).toLowerCase().includes(currentValue)
+  );
+  displayhome('home', filterFirstCharMeal);
+});
+// * Search By First Character from name Meal
