@@ -102,22 +102,35 @@ $('.link-website').on('click', function () {
   $('.detailes-screen').slideUp();
   $('.contact').hide();
   $('.form-search').hide();
+  $('.contact').removeClass('d-flex');
+
   $('.home').show();
-  if ($(this).attr('data-target') === 'categories') {
+  if (
+    $(this).attr('data-target').toLowerCase() === 'categories'.toLowerCase()
+  ) {
     // hideSection();
     allData(urls.categories);
-  } else if ($(this).attr('data-target') === 'area') {
+  } else if (
+    $(this).attr('data-target').toLowerCase() === 'area'.toLowerCase()
+  ) {
     // hideSection();
     allData(urls.areas);
-  } else if ($(this).attr('data-target') === 'ingradients') {
+  } else if (
+    $(this).attr('data-target').toLowerCase() === 'ingradients'.toLowerCase()
+  ) {
     // hideSection();
     allData(urls.Ingredients);
-  } else if ($(this).attr('data-target') === 'contact') {
+  } else if (
+    $(this).attr('data-target').toLowerCase() === 'contact'.toLowerCase()
+  ) {
     // $(row).html('');
     $('.contact').show();
+    $('.contact').addClass('d-flex');
     $('.home').hide();
     $('.form-search').hide();
-  } else if ($(this).attr('data-target') === 'home') {
+  } else if (
+    $(this).attr('data-target').toLowerCase() === 'home'.toLowerCase()
+  ) {
     $('.home').show();
     $('.form-search').show();
     allData(urls.home);
@@ -329,14 +342,10 @@ $('.by-name').on('input', function () {
 
   displayhome('home', filterNameMeals);
 });
-// let namePerson = 'refai';
-// console.log(namePerson.slice(0, 1));
 $('.by-first-litter').on('input', function () {
   let currentValue = $(this).val();
 
-  // Check if the length of the input is greater than 1
   if (currentValue.length > 1) {
-    // Limit the value to the first character
     $(this).val(currentValue.slice(0, 1));
   }
   let filterFirstCharMeal = allDataHome.filter((f) =>
@@ -344,4 +353,5 @@ $('.by-first-litter').on('input', function () {
   );
   displayhome('home', filterFirstCharMeal);
 });
+
 // * Search By First Character from name Meal

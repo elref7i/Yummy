@@ -1,3 +1,21 @@
+html {
+  scroll-behavior: smooth;
+}
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px #cbcbcb;
+  background-color: #000;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: #fbfbfb;
+  -webkit-box-shadow: inset 0 0 6px #e5e5e5;
+}
 a {
   display: inline-block;
 }
@@ -22,7 +40,6 @@ aside {
 
 .close-menue {
   display: none;
-  /* display: block; */
 }
 .detailes-screen {
   display: none;
@@ -30,9 +47,6 @@ aside {
   z-index: 999;
   overflow: auto;
 }
-/* .show-info {
-  overflow-y: auto;
-} */
 .Ingredient p {
   /* min-height: 40px; */
   /* background: #000; */
