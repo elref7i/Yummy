@@ -25,7 +25,7 @@ World Cuisine Explorer is a responsive website that showcases popular dishes fro
 - **Responsive Design**
 
 ## Demo
-To see the website in action, visit the [Live Demo](https://elref7i.github.io/Yummy-Project/).
+To see the website in action, visit the [Live Demo](https://elref7i.github.io/Yummy/).
 
 ## Contact
 For any questions, feel free to reach out via the contact section on the website.
